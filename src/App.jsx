@@ -6,9 +6,9 @@ function App() {
 	const [token, setToken] = useState(null);
 	return (
 		<>
-			<SignUpForm />
+			<SignUpForm submit={() => {}} />
 			{/* We only need to pass the token we got from the signup function, but how to pass the returned value? */}
-			<Authenticate token={token} />
+			{token && <Authenticate token={token} />}
 		</>
 	);
 }
