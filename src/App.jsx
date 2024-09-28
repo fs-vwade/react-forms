@@ -1,5 +1,13 @@
-import { useEffect, useState } from "react";
+import SignUpForm from "./components/SignUpForm.jsx";
+import Authenticate from "./components/Authenticate.jsx";
 
-function App() {}
+function App() {
+	return (
+		<>
+			<SignUpForm />
+			<Authenticate />
+		</>
+	);
+}
 
 export default App;
