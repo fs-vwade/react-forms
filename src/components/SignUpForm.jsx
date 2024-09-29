@@ -12,57 +12,35 @@ export default function SignUpForm({ onSubmit }) {
 		f(event.target.value);
 	}
 
-	const [message, setMessage] = useState(null);
-	//const [token, setToken] = useState(null);
-
-	//useEffect(() => {
-	//	async function signUp() {
-	//		try {
-	//			const response = await fetch(`${API_URL}/signup`, {
-	//				method: "POST",
-	//				headers: {
-	//					"Content-Type": "application/json",
-	//				},
-	//				body: JSON.stringify({
-	//					username: username,
-	//					password: password,
-	//				}),
-	//			});
-	//			const result = response.json();
-	//			setMessage(result.message);
-	//			onSubmit(result.token);
-	//		} catch (error) {
-	//			setError(error);
-	//			console.error(error);
-	//		}
-	//	}
-	//	signUp();
-	//}, []);
-
 	async function submitForm(event) {
 		event.preventDefault();
-		if (username.length && password.length) {
-			try {
-				const response = await fetch(`${API_URL}/signup`, {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						username: username,
-						password: password,
-					}),
-				});
-				const result = await response.json();
-				setMessage(result.message || null);
-				onSubmit(result.token);
-			} catch (error) {
-				setError(error);
-				console.error(error);
-			}
-		} else {
-			if (username.length === 0) alert("Please enter a username");
-			if (password.length === 0) alert("Please enter a password");
+		const ok = 0 < username.length && 0 < password.length;
+		try {
+			if (!ok) {
+				setError(
+					`Please enter a ${["username", "password"]
+						.filter((s, i) => [username, password][i].length === 0)
+						.join(" and ")}`
+				);
+				return;
+			} else setError(null);
+			const response = await fetch(`${API_URL}/signup`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					username: username,
+					password: password,
+				}),
+			});
+			const result = await response.json();
+			//setMessage(result.message || null);
+			onSubmit(result.token);
+		} catch (error) {
+			setError(error.value);
+			console.log(error.messsage);
+			console.error(error);
 		}
 	}
 
@@ -90,6 +68,7 @@ export default function SignUpForm({ onSubmit }) {
 						/>
 					</label>
 				</div>
+				{error && <div className="error-message">{error}</div>}
 				<button>Submit</button>
 			</form>
 			{/*{message && <div>{message}</div>}
