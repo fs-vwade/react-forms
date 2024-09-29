@@ -4,7 +4,7 @@ import { useEffect } from "react";
 const API_URL = "https://fsa-jwt-practice.herokuapp.com";
 
 export default function Authenticate({ token }) {
-	const [message, setMessage] = useState(null);
+	const [message, setMessage] = useState("");
 	const [data, setData] = useState();
 
 	useEffect(() => {
@@ -22,12 +22,13 @@ export default function Authenticate({ token }) {
 					throw new Error("Response did not return OK");
 				}
 
-				const result = response.json();
+				const result = await response.json();
 
 				if (!result.success) {
 					throw new Error("Authorization not successful");
 				}
 
+				console.log(result);
 				setMessage(result.data);
 				setMessage(result.message);
 			} catch (error) {
@@ -38,18 +39,19 @@ export default function Authenticate({ token }) {
 	}, []);
 
 	return (
-		<h2>Authenticate</h2>
-		//<div>
-		//	{message && (
-		//		<>
-		//			<div>Auth: {message}</div>
-		//		</>
-		//	)}
-		//	{data && (
-		//		<>
-		//			<div>Data: {data}</div>
-		//		</>
-		//	)}
-		//</div>
+		<div>
+			<h2>Authenticate</h2>
+
+			{message && (
+				<>
+					<div>Auth: {message}</div>
+				</>
+			)}
+			{data && (
+				<>
+					<div>Data: {data}</div>
+				</>
+			)}
+		</div>
 	);
 }
