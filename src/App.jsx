@@ -6,7 +6,7 @@ function App() {
 	const [token, setToken] = useState(null);
 
 	function passToken(token) {
-		setToken(token);
+		setToken(token || null);
 	}
 
 	return (

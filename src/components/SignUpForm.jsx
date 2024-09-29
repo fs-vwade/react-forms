@@ -12,7 +12,7 @@ export default function SignUpForm({ onSubmit }) {
 		f(event.target.value);
 	}
 
-	//const [message, setMessage] = useState(null);
+	const [message, setMessage] = useState(null);
 	//const [token, setToken] = useState(null);
 
 	//useEffect(() => {
@@ -52,14 +52,13 @@ export default function SignUpForm({ onSubmit }) {
 					password: password,
 				}),
 			});
-			const result = response.json();
-			setMessage(result.message);
+			const result = await response.json();
+			setMessage(result.message || null);
 			onSubmit(result.token);
 		} catch (error) {
 			setError(error);
 			console.error(error);
 		}
-	}
 	}
 
 	return (
@@ -88,8 +87,8 @@ export default function SignUpForm({ onSubmit }) {
 				</div>
 				<button>Submit</button>
 			</form>
-			{message && <div>{message}</div>}
-			{token && <div>{token}</div>}
+			{/*{message && <div>{message}</div>}
+			{token && <div>{token}</div>}*/}
 		</>
 	);
 }
