@@ -18,7 +18,7 @@ const API_URL = "https://fsa-jwt-practice.herokuapp.com";
  * @returns HTML
  */
 export default function Authenticate(props) {
-	const { token, onError } = props;
+	const { token, onError } = props; // i just like the way this syntax works
 	const [message, setMessage] = useState("");
 	const [data, setData] = useState(null);
 	const [error, setError] = useState(null);
