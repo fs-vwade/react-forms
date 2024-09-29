@@ -41,23 +41,28 @@ export default function SignUpForm({ onSubmit }) {
 
 	async function submitForm(event) {
 		event.preventDefault();
-		try {
-			const response = await fetch(`${API_URL}/signup`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					username: username,
-					password: password,
-				}),
-			});
-			const result = await response.json();
-			setMessage(result.message || null);
-			onSubmit(result.token);
-		} catch (error) {
-			setError(error);
-			console.error(error);
+		if (username.length && password.length) {
+			try {
+				const response = await fetch(`${API_URL}/signup`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						username: username,
+						password: password,
+					}),
+				});
+				const result = await response.json();
+				setMessage(result.message || null);
+				onSubmit(result.token);
+			} catch (error) {
+				setError(error);
+				console.error(error);
+			}
+		} else {
+			if (username.length === 0) alert("Please enter a username");
+			if (password.length === 0) alert("Please enter a password");
 		}
 	}
 
