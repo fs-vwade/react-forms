@@ -4,9 +4,14 @@ import Authenticate from "./components/Authenticate.jsx";
 
 function App() {
 	const [token, setToken] = useState(null);
+
+	function passToken(token) {
+		setToken(token);
+	}
+
 	return (
 		<>
-			<SignUpForm submit={() => {}} />
+			<SignUpForm onSubmit={passToken} />
 			{/* We only need to pass the token we got from the signup function, but how to pass the returned value? */}
 			{token && <Authenticate token={token} />}
 		</>
